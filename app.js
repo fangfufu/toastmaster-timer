@@ -3,7 +3,8 @@ let secondsElapsed = 0;
 let thresholds = {
   green: 300,
   amber: 360,
-  red: 420
+  red: 420,
+  bell: 450
 };
 let wakeLock = null;
 
@@ -59,6 +60,7 @@ function startTimer() {
   thresholds.green = timeToSeconds(document.getElementById('green-time').value);
   thresholds.amber = timeToSeconds(document.getElementById('amber-time').value);
   thresholds.red = timeToSeconds(document.getElementById('red-time').value);
+  thresholds.bell = timeToSeconds(document.getElementById('bell-time').value);
 
   // Switch views
   setupView.classList.add('hidden');
@@ -88,7 +90,7 @@ function stopTimer() {
 }
 
 function resetToSetup() {
-  body.classList.remove('state-green', 'state-amber', 'state-red');
+  body.classList.remove('state-green', 'state-amber', 'state-red', 'state-bell');
   summaryView.classList.remove('active');
   setupView.classList.remove('hidden');
   secondsElapsed = 0;
@@ -100,17 +102,20 @@ function updateDisplay() {
 }
 
 function updateBackground() {
-  if (secondsElapsed >= thresholds.red) {
+  if (secondsElapsed >= thresholds.bell) {
+    body.classList.add('state-bell');
+    body.classList.remove('state-green', 'state-amber', 'state-red');
+  } else if (secondsElapsed >= thresholds.red) {
     body.classList.add('state-red');
-    body.classList.remove('state-green', 'state-amber');
+    body.classList.remove('state-green', 'state-amber', 'state-bell');
   } else if (secondsElapsed >= thresholds.amber) {
     body.classList.add('state-amber');
-    body.classList.remove('state-green', 'state-red');
+    body.classList.remove('state-green', 'state-red', 'state-bell');
   } else if (secondsElapsed >= thresholds.green) {
     body.classList.add('state-green');
-    body.classList.remove('state-amber', 'state-red');
+    body.classList.remove('state-amber', 'state-red', 'state-bell');
   } else {
-    body.classList.remove('state-green', 'state-amber', 'state-red');
+    body.classList.remove('state-green', 'state-amber', 'state-red', 'state-bell');
   }
 }
 

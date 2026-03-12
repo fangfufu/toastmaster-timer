@@ -38,6 +38,15 @@ body {
 body.state-green { background-color: var(--tm-green); }
 body.state-amber { background-color: var(--tm-amber); }
 body.state-red { background-color: var(--tm-red); }
+body.state-bell { 
+  background-color: var(--bg-dark);
+  animation: bg-flash 1s infinite;
+}
+
+@keyframes bg-flash {
+  0%, 49% { background-color: var(--tm-red); }
+  50%, 100% { background-color: var(--bg-dark); }
+}
 
 /* Main Container */
 #app {
@@ -103,7 +112,7 @@ label {
 
 .inputs-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
