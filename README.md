@@ -53,4 +53,4 @@ The Toastmasters Timer is built with a **"Visual-First"** approach. By leveragin
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
