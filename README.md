@@ -21,9 +21,13 @@ A premium, full-screen countdown timer designed specifically for Toastmasters ti
 - **Icons**: [Lucide Icons](https://lucide.dev/)
 - **Typography**: Inter (Google Fonts)
 
+## 🚀 Live Demo
+
+[Visit the Toastmasters Timer](https://fangfufu.github.io/toastmaster-timer/)
+
 ## 🚀 Getting Started
 
-Simply open `index.html` in any modern web browser.
+You can use the [Live Demo](https://fangfufu.github.io/toastmaster-timer/) or run it locally by opening `index.html` in any modern web browser.
 
 ### Local Development
 
