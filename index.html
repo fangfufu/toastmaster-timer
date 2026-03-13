@@ -23,10 +23,21 @@
       </div>
       
       <div class="setup-actions">
-        <button id="add-slot-btn" class="secondary-btn">
-          <i data-lucide="plus"></i> Add Speaker Slot
-        </button>
-        <button id="start-btn" disabled>Start Session</button>
+        <div class="main-actions" style="display: flex; gap: 1rem;">
+          <button id="add-slot-btn" class="secondary-btn" style="flex: 1;">
+            <i data-lucide="plus"></i> Add Speaker Slot
+          </button>
+          <button id="start-btn" style="flex: 1;" disabled>Start Session</button>
+        </div>
+        <div class="file-actions" style="display: flex; gap: 1rem;">
+          <button id="save-btn" class="secondary-btn" style="flex: 1;">
+            <i data-lucide="download"></i> Save Session
+          </button>
+          <label id="load-label" class="secondary-btn" style="flex: 1; margin: 0; cursor: pointer;">
+            <i data-lucide="upload"></i> Load Session
+            <input type="file" id="load-input" accept=".yaml,.yml" style="display: none;">
+          </label>
+        </div>
       </div>
     </div>
 
@@ -86,6 +97,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
   <script src="app.js"></script>
   <script>
     lucide.createIcons();

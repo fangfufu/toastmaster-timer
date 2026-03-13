@@ -224,3 +224,63 @@ document.addEventListener('visibilitychange', async () => {
     await requestWakeLock();
   }
 });
+
+// Session Save/Load
+const saveBtn = document.getElementById('save-btn');
+const loadInput = document.getElementById('load-input');
+
+saveBtn.addEventListener('click', () => {
+  const slots = [];
+  document.querySelectorAll('.slot-row').forEach(row => {
+    slots.push({
+      role: row.querySelector('.slot-role').value,
+      name: row.querySelector('.slot-name').value,
+      minMin: row.querySelector('.min-mm').value,
+      minSec: row.querySelector('.min-ss').value,
+      maxMin: row.querySelector('.max-mm').value,
+      maxSec: row.querySelector('.max-ss').value
+    });
+  });
+  
+  const yamlStr = jsyaml.dump(slots, { flowLevel: 1 });
+  const blob = new Blob([yamlStr], { type: 'text/yaml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'toastmasters-session.yaml';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+loadInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const data = jsyaml.load(event.target.result);
+      if (Array.isArray(data)) {
+        slotsContainer.innerHTML = '';
+        data.forEach(slot => {
+          addSlot(slot.role || '', slot.name || '', slot.minMin || '0', slot.minSec || '00', slot.maxMin || '0', slot.maxSec || '00', false);
+        });
+        
+        const firstRadio = slotsContainer.querySelector('.slot-radio');
+        if (firstRadio) {
+          firstRadio.checked = true;
+          startBtn.disabled = false;
+        } else {
+          startBtn.disabled = true;
+        }
+      } else {
+        alert('Invalid session file format. Expected an array of slots.');
+      }
+    } catch (err) {
+      alert('Error loading session file: ' + err.message);
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = ''; // reset input
+});
