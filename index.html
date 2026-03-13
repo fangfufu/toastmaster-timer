@@ -18,30 +18,54 @@
       <h1>Timer Setup</h1>
       <p class="subtitle">Set your target intervals for the session</p>
       
-      <div class="input-group">
-        <label>Time Thresholds (Minutes:Seconds)</label>
-        <div class="inputs-row centered-thresholds">
-          <div class="threshold-col">
-            <label style="color: var(--tm-green)">Minimum Time</label>
-            <div class="time-input-pair">
-              <input type="text" id="min-mm" placeholder="MM" value="5">
-              <span>:</span>
-              <input type="text" id="min-ss" placeholder="SS" value="00">
+      <div id="slots-container" class="slots-container">
+        <!-- Slots will be populated by JS -->
+      </div>
+      
+      <div class="setup-actions">
+        <button id="add-slot-btn" class="secondary-btn">
+          <i data-lucide="plus"></i> Add Speaker Slot
+        </button>
+        <button id="start-btn" disabled>Start Session</button>
+      </div>
+    </div>
+
+    <template id="slot-template">
+      <div class="slot-row">
+        <label class="radio-label" title="Select to start timer for this slot">
+          <input type="radio" name="selected-slot" class="slot-radio">
+          <span class="custom-radio"></span>
+        </label>
+        
+        <div class="slot-fields">
+          <input type="text" class="slot-role" placeholder="Role">
+          <input type="text" class="slot-name" placeholder="Name">
+          
+          <div class="slot-times">
+            <div class="time-input-group">
+              <span class="time-label" style="color: var(--tm-green)">Min</span>
+              <div class="time-input-pair">
+                <input type="text" class="min-mm" placeholder="MM">
+                <span>:</span>
+                <input type="text" class="min-ss" placeholder="SS">
+              </div>
             </div>
-          </div>
-          <div class="threshold-col">
-            <label style="color: var(--tm-red)">Maximum Time</label>
-            <div class="time-input-pair">
-              <input type="text" id="max-mm" placeholder="MM" value="7">
-              <span>:</span>
-              <input type="text" id="max-ss" placeholder="SS" value="00">
+            <div class="time-input-group">
+              <span class="time-label" style="color: var(--tm-red)">Max</span>
+              <div class="time-input-pair">
+                <input type="text" class="max-mm" placeholder="MM">
+                <span>:</span>
+                <input type="text" class="max-ss" placeholder="SS">
+              </div>
             </div>
           </div>
         </div>
+        
+        <button class="icon-btn delete-btn" title="Remove Slot">
+          <i data-lucide="trash-2"></i>
+        </button>
       </div>
-      
-      <button id="start-btn">Start Session</button>
-    </div>
+    </template>
 
     <!-- Timer View -->
     <div id="timer-view">
