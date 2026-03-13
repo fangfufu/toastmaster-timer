@@ -108,16 +108,16 @@ function stopTimer() {
     const timeUsedCol = row.querySelector('.time-used-col');
     const progressFill = row.querySelector('.progress-fill');
     const timeLabel = row.querySelector('.time-used-label');
-    
+
     if (timeUsedCol && progressFill && thresholds.bell > 0) {
       let percentage = (secondsElapsed / thresholds.bell) * 100;
       if (percentage > 100) percentage = 100;
-      
+
       progressFill.style.width = percentage + '%';
       if (timeLabel) timeLabel.innerText = Math.round((secondsElapsed / thresholds.bell) * 100) + '%';
       timeUsedCol.classList.add('has-data');
       row.dataset.timeUsed = secondsElapsed;
-      
+
       // Add color coding to the bar
       if (secondsElapsed >= thresholds.red) {
         progressFill.style.background = 'var(--tm-red)';
@@ -196,25 +196,25 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
     const minSecs = (parseInt(minM) * 60) + parseInt(minS);
     const maxSecs = (parseInt(maxM) * 60) + parseInt(maxS);
     const bellTime = maxSecs + 30;
-    
+
     if (bellTime > 0) {
       const timeUsedCol = node.querySelector('.time-used-col');
       const progressFill = node.querySelector('.progress-fill');
       const timeLabel = node.querySelector('.time-used-label');
-      
+
       if (timeUsedCol && progressFill) {
         let percentage = (timeUsed / bellTime) * 100;
         if (percentage > 100) percentage = 100;
-        
+
         progressFill.style.width = percentage + '%';
         if (timeLabel) timeLabel.innerText = Math.round((timeUsed / bellTime) * 100) + '%';
         timeUsedCol.classList.add('has-data');
         row.dataset.timeUsed = timeUsed;
-        
+
         const green = minSecs;
         const amber = (minSecs + maxSecs) / 2;
         const red = maxSecs;
-        
+
         if (timeUsed >= red) {
           progressFill.style.background = 'var(--tm-red)';
         } else if (timeUsed >= amber) {
@@ -309,7 +309,7 @@ saveBtn.addEventListener('click', () => {
       timeUsed: row.dataset.timeUsed !== undefined ? parseFloat(row.dataset.timeUsed) : null
     });
   });
-  
+
   const yamlStr = jsyaml.dump(slots, { flowLevel: 1 });
   const blob = new Blob([yamlStr], { type: 'text/yaml' });
   const url = URL.createObjectURL(blob);
@@ -323,7 +323,7 @@ saveBtn.addEventListener('click', () => {
 loadInput.addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (!file) return;
-  
+
   const reader = new FileReader();
   reader.onload = (event) => {
     try {
@@ -333,7 +333,7 @@ loadInput.addEventListener('change', (e) => {
         data.forEach(slot => {
           addSlot(slot.role || '', slot.name || '', slot.minMin || '0', slot.minSec || '00', slot.maxMin || '0', slot.maxSec || '00', false, slot.timeUsed);
         });
-        
+
         const firstRadio = slotsContainer.querySelector('.slot-radio');
         if (firstRadio) {
           firstRadio.checked = true;
@@ -351,4 +351,82 @@ loadInput.addEventListener('change', (e) => {
   };
   reader.readAsText(file);
   e.target.value = ''; // reset input
+});
+
+// Toast Notification
+function showToast(html, duration = 10000) {
+  const container = document.getElementById('toast-container');
+  // Remove existing toasts
+  container.innerHTML = '';
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<button class="toast-close" title="Dismiss">&times;</button>${html}`;
+  container.appendChild(toast);
+
+  const dismiss = () => {
+    toast.classList.add('toast-out');
+    toast.addEventListener('animationend', () => toast.remove());
+  };
+
+  toast.querySelector('.toast-close').addEventListener('click', dismiss);
+
+  if (duration > 0) {
+    setTimeout(dismiss, duration);
+  }
+}
+
+// Usage Button
+const usageBtn = document.getElementById('usage-btn');
+usageBtn.addEventListener('click', () => {
+  showToast(`
+    <h3>How to Use</h3>
+    <p><strong>1.</strong> Edit the agenda — fill in speaker names and adjust min/max times.</p>
+    <p><strong>2.</strong> Select a slot with the radio button, then click <strong>Start Segment</strong>.</p>
+    <p><strong>3.</strong> The timer runs full-screen with colour changes: <strong style="color:var(--tm-green)">Green</strong> (min time), <strong style="color:var(--tm-amber)">Amber</strong> (midpoint), <strong style="color:var(--tm-red)">Red</strong> (max time), <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
+    <p><strong>4.</strong> Press <strong>■ Stop</strong> when the speaker finishes, then <strong>Back to Setup</strong> for the next speaker.</p>
+    <p><strong>5.</strong> Use <strong>Save / Load Session</strong> to persist your work between meetings.</p>
+  `, 0);
+});
+
+// Theme Toggle
+const themeBtn = document.getElementById('theme-btn');
+const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+function applyTheme(dark) {
+  if (dark) {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+  // Update icon
+  const icon = themeBtn.querySelector('i');
+  if (icon) {
+    icon.setAttribute('data-lucide', dark ? 'sun' : 'moon');
+    lucide.createIcons();
+  }
+}
+
+function getEffectiveTheme() {
+  const saved = localStorage.getItem('toastmaster-theme');
+  if (saved === 'dark' || saved === 'light') return saved === 'dark';
+  // No manual override — follow browser/OS preference
+  return darkModeQuery.matches;
+}
+
+// Apply on load
+applyTheme(getEffectiveTheme());
+
+// Manual toggle — saves override
+themeBtn.addEventListener('click', () => {
+  const isDark = document.body.classList.contains('dark-theme');
+  applyTheme(!isDark);
+  localStorage.setItem('toastmaster-theme', isDark ? 'light' : 'dark');
+});
+
+// Listen for OS theme changes (only if user hasn't manually overridden)
+darkModeQuery.addEventListener('change', () => {
+  if (!localStorage.getItem('toastmaster-theme')) {
+    applyTheme(darkModeQuery.matches);
+  }
 });

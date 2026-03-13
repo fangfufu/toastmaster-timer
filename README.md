@@ -37,7 +37,7 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
 
 1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) or serve the files locally.
 2. Edit the agenda — fill in speaker names and adjust min/max times as needed.
-3. Select a slot with the radio button, then click **Start Session**.
+3. Select a slot with the radio button, then click **Start Segment**.
 4. The timer runs full-screen. Press the **■ Stop** button when the speaker finishes.
 5. Review the summary, then click **Back to Setup** to time the next speaker.
 6. Use **Save Session** / **Load Session** to persist your work between meetings.

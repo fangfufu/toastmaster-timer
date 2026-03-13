@@ -30,7 +30,7 @@
           <button id="add-slot-btn" class="secondary-btn" style="flex: 1;">
             <i data-lucide="plus"></i> Add Speaker Slot
           </button>
-          <button id="start-btn" style="flex: 1;" disabled>Start Session</button>
+          <button id="start-btn" style="flex: 1;" disabled>Start Segment</button>
         </div>
         <div class="file-actions" style="display: flex; gap: 1rem;">
           <button id="save-btn" class="secondary-btn" style="flex: 1;">
@@ -40,6 +40,12 @@
             <i data-lucide="upload"></i> Load Session
             <input type="file" id="load-input" accept=".yaml,.yml" style="display: none;">
           </label>
+          <button id="usage-btn" class="secondary-btn" style="flex: 1;">
+            <i data-lucide="help-circle"></i> Usage
+          </button>
+          <button id="theme-btn" class="secondary-btn" title="Toggle colour scheme">
+            <i data-lucide="moon"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -106,6 +112,9 @@
       <button id="back-btn">Back to Setup</button>
     </div>
   </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
   <script src="app.js"></script>
