@@ -101,6 +101,36 @@ function stopTimer() {
   // Show summary
   totalTimeDisplay.innerText = formatTime(secondsElapsed);
 
+  // Update Time Used bar for the selected row
+  const selectedRadio = document.querySelector('.slot-radio:checked');
+  if (selectedRadio) {
+    const row = selectedRadio.closest('.slot-row');
+    const timeUsedCol = row.querySelector('.time-used-col');
+    const progressFill = row.querySelector('.progress-fill');
+    const timeLabel = row.querySelector('.time-used-label');
+    
+    if (timeUsedCol && progressFill && thresholds.bell > 0) {
+      let percentage = (secondsElapsed / thresholds.bell) * 100;
+      if (percentage > 100) percentage = 100;
+      
+      progressFill.style.width = percentage + '%';
+      if (timeLabel) timeLabel.innerText = Math.round((secondsElapsed / thresholds.bell) * 100) + '%';
+      timeUsedCol.classList.add('has-data');
+      row.dataset.timeUsed = secondsElapsed;
+      
+      // Add color coding to the bar
+      if (secondsElapsed >= thresholds.red) {
+        progressFill.style.background = 'var(--tm-red)';
+      } else if (secondsElapsed >= thresholds.amber) {
+        progressFill.style.background = 'var(--tm-amber)';
+      } else if (secondsElapsed >= thresholds.green) {
+        progressFill.style.background = 'var(--tm-green)';
+      } else {
+        progressFill.style.background = 'var(--accent)';
+      }
+    }
+  }
+
   timerView.classList.remove('active');
   summaryView.classList.add('active');
 }
@@ -140,7 +170,7 @@ startBtn.addEventListener('click', startTimer);
 resetBtn.addEventListener('click', stopTimer);
 backBtn.addEventListener('click', resetToSetup);
 
-function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS = '00', select = false) {
+function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS = '00', select = false, timeUsed = null) {
   const node = slotTemplate.content.cloneNode(true);
   const row = node.querySelector('.slot-row');
 
@@ -159,6 +189,43 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
   if (select) {
     radio.checked = true;
     startBtn.disabled = false;
+  }
+
+  // Restore time used if provided
+  if (timeUsed !== null && timeUsed !== undefined) {
+    const minSecs = (parseInt(minM) * 60) + parseInt(minS);
+    const maxSecs = (parseInt(maxM) * 60) + parseInt(maxS);
+    const bellTime = maxSecs + 30;
+    
+    if (bellTime > 0) {
+      const timeUsedCol = node.querySelector('.time-used-col');
+      const progressFill = node.querySelector('.progress-fill');
+      const timeLabel = node.querySelector('.time-used-label');
+      
+      if (timeUsedCol && progressFill) {
+        let percentage = (timeUsed / bellTime) * 100;
+        if (percentage > 100) percentage = 100;
+        
+        progressFill.style.width = percentage + '%';
+        if (timeLabel) timeLabel.innerText = Math.round((timeUsed / bellTime) * 100) + '%';
+        timeUsedCol.classList.add('has-data');
+        row.dataset.timeUsed = timeUsed;
+        
+        const green = minSecs;
+        const amber = (minSecs + maxSecs) / 2;
+        const red = maxSecs;
+        
+        if (timeUsed >= red) {
+          progressFill.style.background = 'var(--tm-red)';
+        } else if (timeUsed >= amber) {
+          progressFill.style.background = 'var(--tm-amber)';
+        } else if (timeUsed >= green) {
+          progressFill.style.background = 'var(--tm-green)';
+        } else {
+          progressFill.style.background = 'var(--accent)';
+        }
+      }
+    }
   }
 
   node.querySelector('.delete-btn').addEventListener('click', () => {
@@ -238,7 +305,8 @@ saveBtn.addEventListener('click', () => {
       minMin: row.querySelector('.min-mm').value,
       minSec: row.querySelector('.min-ss').value,
       maxMin: row.querySelector('.max-mm').value,
-      maxSec: row.querySelector('.max-ss').value
+      maxSec: row.querySelector('.max-ss').value,
+      timeUsed: row.dataset.timeUsed !== undefined ? parseFloat(row.dataset.timeUsed) : null
     });
   });
   
@@ -263,7 +331,7 @@ loadInput.addEventListener('change', (e) => {
       if (Array.isArray(data)) {
         slotsContainer.innerHTML = '';
         data.forEach(slot => {
-          addSlot(slot.role || '', slot.name || '', slot.minMin || '0', slot.minSec || '00', slot.maxMin || '0', slot.maxSec || '00', false);
+          addSlot(slot.role || '', slot.name || '', slot.minMin || '0', slot.minSec || '00', slot.maxMin || '0', slot.maxSec || '00', false, slot.timeUsed);
         });
         
         const firstRadio = slotsContainer.querySelector('.slot-radio');

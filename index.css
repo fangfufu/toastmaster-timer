@@ -204,6 +204,41 @@ p.subtitle {
   align-items: center;
 }
 
+.time-used-col {
+  flex: 0.6;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.time-used-col.has-data {
+  opacity: 1;
+}
+
+.time-used-col .time-label {
+  color: var(--text-secondary);
+}
+
+.progress-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.5s ease-out, background-color 0.5s;
+}
+
 .time-input-group {
   display: flex;
   align-items: center;
@@ -470,6 +505,10 @@ button#back-btn:hover {
   }
   .slot-times {
     justify-content: space-between;
+    width: 100%;
+  }
+  .time-used-col {
+    margin-top: 1rem;
     width: 100%;
   }
 }

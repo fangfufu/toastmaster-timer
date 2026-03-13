@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toastmasters Timer</title>
-  <meta name="description" content="A professional countdown timer for Toastmasters sessions with full-screen color transitions.">
+  <meta name="description"
+    content="A professional countdown timer for Toastmasters sessions with full-screen color transitions.">
   <link rel="stylesheet" href="index.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body id="body">
   <div id="app">
     <!-- Setup View -->
     <div id="setup-view">
       <h1>Timer Setup</h1>
       <p class="subtitle">Set your target intervals for the session</p>
-      
+
       <div id="slots-container" class="slots-container">
         <!-- Slots will be populated by JS -->
       </div>
-      
+
       <div class="setup-actions">
         <div class="main-actions" style="display: flex; gap: 1rem;">
           <button id="add-slot-btn" class="secondary-btn" style="flex: 1;">
@@ -47,11 +50,11 @@
           <input type="radio" name="selected-slot" class="slot-radio">
           <span class="custom-radio"></span>
         </label>
-        
+
         <div class="slot-fields">
           <input type="text" class="slot-role" placeholder="Role">
           <input type="text" class="slot-name" placeholder="Name">
-          
+
           <div class="slot-times">
             <div class="time-input-group">
               <span class="time-label" style="color: var(--tm-green)">Min</span>
@@ -70,8 +73,15 @@
               </div>
             </div>
           </div>
+
+          <div class="time-used-col">
+            <span class="time-label time-used-label">Time used</span>
+            <div class="progress-bg" title="Time used percentage against bell time">
+              <div class="progress-fill"></div>
+            </div>
+          </div>
         </div>
-        
+
         <button class="icon-btn delete-btn" title="Remove Slot">
           <i data-lucide="trash-2"></i>
         </button>
@@ -82,7 +92,7 @@
     <div id="timer-view">
       <div id="timer-display">0:00</div>
       <div class="controls">
-        <button id="reset-btn" class="icon-btn" title="Stop & Reset">
+        <button id="reset-btn" class="icon-btn" title="Stop">
           <i data-lucide="square"></i>
         </button>
       </div>
@@ -103,4 +113,5 @@
     lucide.createIcons();
   </script>
 </body>
+
 </html>
