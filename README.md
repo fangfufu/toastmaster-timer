@@ -23,7 +23,7 @@ A premium, full-screen countdown timer designed specifically for Toastmasters ti
 
 ## 🚀 Live Demo
 
-[Visit the Toastmasters Timer](https://fangfufu.github.io/toastmaster-timer/)
+[Visit the Toastmasters Timer](journalctl --user -u xdg-desktop-portal-kde --since "5 minutes ago")
 
 ## 🚀 Getting Started
 

@@ -20,22 +20,22 @@
       
       <div class="input-group">
         <label>Time Thresholds (Minutes:Seconds)</label>
-        <div class="inputs-row">
-          <div>
-            <label for="green-time" style="color: var(--tm-green)">Green</label>
-            <input type="text" id="green-time" placeholder="5:00" value="5:00">
+        <div class="inputs-row centered-thresholds">
+          <div class="threshold-col">
+            <label style="color: var(--tm-green)">Minimum Time</label>
+            <div class="time-input-pair">
+              <input type="text" id="min-mm" placeholder="MM" value="5">
+              <span>:</span>
+              <input type="text" id="min-ss" placeholder="SS" value="00">
+            </div>
           </div>
-          <div>
-            <label for="amber-time" style="color: var(--tm-amber)">Amber</label>
-            <input type="text" id="amber-time" placeholder="6:00" value="6:00">
-          </div>
-          <div>
-            <label for="red-time" style="color: var(--tm-red)">Red</label>
-            <input type="text" id="red-time" placeholder="7:00" value="7:00">
-          </div>
-          <div>
-            <label for="bell-time" style="color: var(--text-primary)">Bell</label>
-            <input type="text" id="bell-time" placeholder="7:30" value="7:30">
+          <div class="threshold-col">
+            <label style="color: var(--tm-red)">Maximum Time</label>
+            <div class="time-input-pair">
+              <input type="text" id="max-mm" placeholder="MM" value="7">
+              <span>:</span>
+              <input type="text" id="max-ss" placeholder="SS" value="00">
+            </div>
           </div>
         </div>
       </div>

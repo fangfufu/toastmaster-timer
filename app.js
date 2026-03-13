@@ -57,10 +57,18 @@ function releaseWakeLock() {
 // Timer Logic
 function startTimer() {
   // Get and parse inputs
-  thresholds.green = timeToSeconds(document.getElementById('green-time').value);
-  thresholds.amber = timeToSeconds(document.getElementById('amber-time').value);
-  thresholds.red = timeToSeconds(document.getElementById('red-time').value);
-  thresholds.bell = timeToSeconds(document.getElementById('bell-time').value);
+  const minMM = parseInt(document.getElementById('min-mm').value) || 0;
+  const minSS = parseInt(document.getElementById('min-ss').value) || 0;
+  const maxMM = parseInt(document.getElementById('max-mm').value) || 0;
+  const maxSS = parseInt(document.getElementById('max-ss').value) || 0;
+
+  const minSeconds = (minMM * 60) + minSS;
+  const maxSeconds = (maxMM * 60) + maxSS;
+
+  thresholds.green = minSeconds;
+  thresholds.amber = (minSeconds + maxSeconds) / 2;
+  thresholds.red = maxSeconds;
+  thresholds.bell = maxSeconds + 30;
 
   // Switch views
   setupView.classList.add('hidden');
