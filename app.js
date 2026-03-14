@@ -81,6 +81,7 @@ function startTimer() {
   // Switch views
   setupView.classList.add('hidden');
   timerView.classList.add('active');
+  body.classList.add('timer-active');
 
   secondsElapsed = 0;
   updateDisplay();
@@ -97,6 +98,7 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timerInterval);
   releaseWakeLock();
+  body.classList.remove('state-green', 'state-amber', 'state-red', 'state-bell');
 
   // Show summary
   totalTimeDisplay.innerText = formatTime(secondsElapsed);
@@ -136,7 +138,7 @@ function stopTimer() {
 }
 
 function resetToSetup() {
-  body.classList.remove('state-green', 'state-amber', 'state-red', 'state-bell');
+  body.classList.remove('timer-active', 'state-green', 'state-amber', 'state-red', 'state-bell');
   summaryView.classList.remove('active');
   setupView.classList.remove('hidden');
   secondsElapsed = 0;

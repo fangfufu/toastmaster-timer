@@ -97,18 +97,23 @@ body {
   transition: background-color var(--transition-speed) ease, color 0.3s;
 }
 
+/* Timer active — always use dark background */
+body.timer-active {
+  background-color: #0f172a;
+}
+
 /* Background States */
 body.state-green { background-color: var(--tm-green); }
 body.state-amber { background-color: var(--tm-amber); }
 body.state-red { background-color: var(--tm-red); }
 body.state-bell {
-  background-color: var(--bg-main);
+  background-color: #0f172a;
   animation: bg-flash 1s infinite;
 }
 
 @keyframes bg-flash {
   0%, 49% { background-color: var(--tm-red); }
-  50%, 100% { background-color: var(--bg-main); }
+  50%, 100% { background-color: #0f172a; }
 }
 
 /* Main Container */
@@ -462,11 +467,19 @@ button#start-btn:disabled {
   display: flex;
 }
 
+#timer-view {
+  --icon-btn-bg: rgba(0, 0, 0, 0.2);
+  --icon-btn-border: rgba(255, 255, 255, 0.1);
+  --icon-btn-color: white;
+  --icon-btn-hover: rgba(255, 255, 255, 0.1);
+}
+
 #timer-display {
   font-size: 15vw;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  color: #f8fafc;
   text-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
