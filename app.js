@@ -257,7 +257,19 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
 }
 
 addSlotBtn.addEventListener('click', () => {
-  addSlot();
+  const selectedRadio = slotsContainer.querySelector('.slot-radio:checked');
+  let sourceRow = selectedRadio ? selectedRadio.closest('.slot-row') : slotsContainer.querySelector('.slot-row:last-child');
+
+  if (sourceRow) {
+    const role = sourceRow.querySelector('.slot-role').value;
+    const minM = sourceRow.querySelector('.min-mm').value;
+    const minS = sourceRow.querySelector('.min-ss').value;
+    const maxM = sourceRow.querySelector('.max-mm').value;
+    const maxS = sourceRow.querySelector('.max-ss').value;
+    addSlot(role, '', minM, minS, maxM, maxS, true);
+  } else {
+    addSlot();
+  }
 });
 
 // Initialize first slots
@@ -384,7 +396,7 @@ usageBtn.addEventListener('click', () => {
   showToast(`
     <h3>How to Use</h3>
     <p><strong>1.</strong> Edit the agenda — fill in speaker names and adjust min/max times.</p>
-    <p><strong>2.</strong> Select a slot with the radio button, then click <strong>Start Segment</strong>.</p>
+    <p><strong>2.</strong> Select a slot with the radio button, then click <strong>Start Speaker Slot</strong>.</p>
     <p><strong>3.</strong> The timer runs full-screen with colour changes: <strong style="color:var(--tm-green)">Green</strong> (min time), <strong style="color:var(--tm-amber)">Amber</strong> (midpoint), <strong style="color:var(--tm-red)">Red</strong> (max time), <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
     <p><strong>4.</strong> Press <strong>■ Stop</strong> when the speaker finishes, then <strong>Back to Setup</strong> for the next speaker.</p>
     <p><strong>5.</strong> Use <strong>Save / Load Session</strong> to persist your work between meetings.</p>
