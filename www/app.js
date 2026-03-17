@@ -141,7 +141,7 @@ async function stopTimer() {
       if (percentage > 100) percentage = 100;
 
       progressFill.style.width = percentage + '%';
-      if (timeLabel) timeLabel.innerText = formatTime(secondsElapsed) + ' (' + Math.round((secondsElapsed / thresholds.bell) * 100) + '%)';
+      if (timeLabel) timeLabel.innerText = 'Time used: ' + formatTime(secondsElapsed) + ' (' + Math.round((secondsElapsed / thresholds.bell) * 100) + '%)';
       timeUsedCol.classList.add('has-data');
       row.dataset.timeUsed = secondsElapsed;
 
@@ -254,7 +254,7 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
         if (percentage > 100) percentage = 100;
 
         progressFill.style.width = percentage + '%';
-        if (timeLabel) timeLabel.innerText = formatTime(timeUsed) + ' (' + Math.round((timeUsed / bellTime) * 100) + '%)';
+        if (timeLabel) timeLabel.innerText = 'Time used: ' + formatTime(timeUsed) + ' (' + Math.round((timeUsed / bellTime) * 100) + '%)';
         timeUsedCol.classList.add('has-data');
         row.dataset.timeUsed = timeUsed;
 
