@@ -7,6 +7,9 @@ let thresholds = {
   bell: 450
 };
 let wakeLock = null;
+let wakeLockActive = false;
+let isCapacitor = typeof Capacitor !== 'undefined';
+
 
 const body = document.getElementById('body');
 const setupView = document.getElementById('setup-view');
@@ -39,21 +42,43 @@ function formatTime(totalSeconds) {
 
 // Wake Lock implementation
 async function requestWakeLock() {
+  wakeLockActive = true;
+  if (isCapacitor) {
+    try {
+      await Capacitor.Plugins.KeepAwake.keepAwake();
+      console.log('Capacitor Wake Lock active');
+      return;
+    } catch (err) {
+      console.warn('Capacitor KeepAwake failed:', err);
+    }
+  }
+
   try {
     if ('wakeLock' in navigator) {
       wakeLock = await navigator.wakeLock.request('screen');
-      console.log('Wake Lock active');
+      console.log('Web Wake Lock active');
     }
   } catch (err) {
     console.warn(`${err.name}, ${err.message}`);
   }
 }
 
-function releaseWakeLock() {
+async function releaseWakeLock() {
+  wakeLockActive = false;
+  if (isCapacitor) {
+    try {
+      await Capacitor.Plugins.KeepAwake.allowSleep();
+      console.log('Capacitor Wake Lock released');
+      return;
+    } catch (err) {
+      console.warn('Capacitor allowSleep failed:', err);
+    }
+  }
+
   if (wakeLock !== null) {
     wakeLock.release();
     wakeLock = null;
-    console.log('Wake Lock released');
+    console.log('Web Wake Lock released');
   }
 }
 
@@ -95,9 +120,9 @@ function startTimer() {
   }, 1000);
 }
 
-function stopTimer() {
+async function stopTimer() {
   clearInterval(timerInterval);
-  releaseWakeLock();
+  await releaseWakeLock();
   body.classList.remove('state-green', 'state-amber', 'state-red', 'state-bell');
 
   // Show summary
@@ -171,6 +196,26 @@ function updateBackground() {
 startBtn.addEventListener('click', startTimer);
 resetBtn.addEventListener('click', stopTimer);
 backBtn.addEventListener('click', resetToSetup);
+
+// Capacitor Back Button Handling
+if (isCapacitor) {
+  Capacitor.Plugins.App.addListener('backButton', ({ canGoBack }) => {
+    if (!timerView.classList.contains('hidden') && timerView.classList.contains('active')) {
+      // Timer is running, stop it
+      stopTimer();
+    } else if (summaryView.classList.contains('active')) {
+      // Summary is showing, go back to setup
+      resetToSetup();
+    } else {
+      // Setup view, minimize app if cannot go back
+      if (!canGoBack) {
+        Capacitor.Plugins.App.exitApp();
+      } else {
+        window.history.back();
+      }
+    }
+  });
+}
 
 function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS = '00', select = false, timeUsed = null) {
   const node = slotTemplate.content.cloneNode(true);
@@ -301,7 +346,7 @@ if (firstRadio) {
 
 // Re-request wake lock if tab becomes visible again
 document.addEventListener('visibilitychange', async () => {
-  if (wakeLock !== null && document.visibilityState === 'visible') {
+  if (wakeLockActive && document.visibilityState === 'visible') {
     await requestWakeLock();
   }
 });
