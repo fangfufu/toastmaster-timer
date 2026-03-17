@@ -9,6 +9,13 @@ let thresholds = {
 let wakeLock = null;
 let wakeLockActive = false;
 let isCapacitor = typeof Capacitor !== 'undefined';
+if ('serviceWorker' in navigator && !isCapacitor) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.error('Service Worker registration failed', err));
+  });
+}
 
 
 const body = document.getElementById('body');
