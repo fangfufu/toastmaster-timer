@@ -103,17 +103,34 @@ body.timer-active {
 }
 
 /* Background States */
-body.state-green { background-color: var(--tm-green); }
-body.state-amber { background-color: var(--tm-amber); }
-body.state-red { background-color: var(--tm-red); }
+body.state-green {
+  background-color: var(--tm-green);
+}
+
+body.state-amber {
+  background-color: var(--tm-amber);
+}
+
+body.state-red {
+  background-color: var(--tm-red);
+}
+
 body.state-bell {
   background-color: #0f172a;
   animation: bg-flash 1s infinite;
 }
 
 @keyframes bg-flash {
-  0%, 49% { background-color: var(--tm-red); }
-  50%, 100% { background-color: #0f172a; }
+
+  0%,
+  49% {
+    background-color: var(--tm-red);
+  }
+
+  50%,
+  100% {
+    background-color: #0f172a;
+  }
 }
 
 /* Main Container */
@@ -195,14 +212,17 @@ p.subtitle {
 .slots-container::-webkit-scrollbar {
   width: 8px;
 }
+
 .slots-container::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
   border-radius: 4px;
 }
+
 .slots-container::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
+
 .slots-container::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
 }
@@ -247,11 +267,11 @@ p.subtitle {
   transition: all 0.2s;
 }
 
-.slot-radio:checked + .custom-radio {
+.slot-radio:checked+.custom-radio {
   border-color: var(--accent);
 }
 
-.slot-radio:checked + .custom-radio::after {
+.slot-radio:checked+.custom-radio::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -273,8 +293,8 @@ p.subtitle {
 
 
 .slot-role {
-  flex: 1.5;
-  min-width: 180px;
+  flex: 2;
+  min-width: 250px;
 }
 
 .slot-name {
@@ -289,8 +309,8 @@ p.subtitle {
 }
 
 .time-used-col {
-  flex: 0.4;
-  min-width: 120px;
+  flex: 0.2;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -356,7 +376,8 @@ p.subtitle {
   font-size: 0.85rem;
 }
 
-input[type="time"], input[type="text"] {
+input[type="time"],
+input[type="text"] {
   width: 100%;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
@@ -368,8 +389,10 @@ input[type="time"], input[type="text"] {
   transition: border-color 0.2s, background-color 0.2s;
 }
 
-input[type="text"]:hover, input[type="text"]:focus,
-input[type="time"]:hover, input[type="time"]:focus {
+input[type="text"]:hover,
+input[type="text"]:focus,
+input[type="time"]:hover,
+input[type="time"]:focus {
   background: var(--input-hover-bg);
   border-color: var(--input-hover-border);
 }
@@ -405,7 +428,8 @@ input:focus {
   flex-wrap: nowrap;
 }
 
-.main-actions, .file-actions {
+.main-actions,
+.file-actions {
   display: flex;
   gap: 0.75rem;
   flex-wrap: nowrap;
@@ -414,9 +438,9 @@ input:focus {
 
 
 
-.main-actions > button,
-.file-actions > button,
-.file-actions > label,
+.main-actions>button,
+.file-actions>button,
+.file-actions>label,
 button#start-btn,
 button#back-btn {
   flex: 1;
@@ -455,7 +479,8 @@ button#back-btn {
 }
 
 #add-slot-btn {
-  background: #6366f1; /* Indigo */
+  background: #6366f1;
+  /* Indigo */
   color: white;
   border: none;
 }
@@ -531,7 +556,7 @@ button#start-btn:disabled {
   font-variant-numeric: tabular-nums;
   line-height: 1;
   color: #f8fafc;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .controls {
@@ -662,66 +687,80 @@ button#back-btn:hover {
   #setup-view {
     padding: 2rem;
   }
+
   .slot-row {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 1.5rem;
-  }
-  .radio-label {
-    position: absolute;
-    top: 0.75rem;
-    left: 1.5rem;
-    height: 32px;
+    display: grid;
+    grid-template-columns: 40px 1fr 20px 20px;
+    grid-template-rows: auto auto auto auto;
+    gap: 0.5rem;
+    padding: 1rem;
     align-items: center;
   }
-  .delete-btn {
-    position: absolute;
-    top: 0.75rem;
-    right: 1.0rem;
-    width: 32px;
-    height: 32px;
-  }
+
   .time-used-col {
-    position: absolute;
-    top: 0.75rem;
-    left: 4rem;
-    right: 3.5rem;
-    height: 32px;
-    width: auto;
-    min-width: unset;
-    margin: 0;
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    order: unset;
+    height: 32px;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    width: auto;
+    min-width: unset;
+    margin-bottom: 0.5rem;
   }
   .time-used-col .time-label {
-    white-space: nowrap;
-    font-size: 0.65rem;
-    font-weight: 800;
+    display: none;
   }
-  .time-used-col .progress-bg {
-    flex: 1;
-    margin: 0;
+
+  .radio-label {
+    grid-row: 2 / span 2;
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .slot-fields {
-    flex-direction: column;
-    align-items: stretch;
-    margin-top: 1.5rem;
+    display: contents;
+  }
+
+  .slot-role {
+    grid-row: 2;
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .slot-name {
+    grid-row: 3;
+    grid-column: 2;
+    min-width: 0;
   }
 
   .slot-times {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    width: 100%;
+    grid-row: 4;
+    grid-column: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 0.5rem;
+    width: 100%;
   }
 
-  .main-actions > button,
-  .file-actions > button,
-  .file-actions > label {
+  .delete-btn {
+    grid-row: 2 / span 2;
+    grid-column: 3 / span 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  .main-actions>button,
+  .file-actions>button,
+  .file-actions>label {
     min-width: unset;
     flex: 1;
   }
@@ -737,7 +776,8 @@ button#back-btn:hover {
     border-top: 1px solid var(--glass-border);
   }
 
-  .main-actions, .file-actions {
+  .main-actions,
+  .file-actions {
     flex: 0 0 auto;
     gap: 0.5rem;
     flex-wrap: nowrap;
@@ -747,7 +787,9 @@ button#back-btn:hover {
     display: none;
   }
 
-  .secondary-btn, button#start-btn, button#back-btn {
+  .secondary-btn,
+  button#start-btn,
+  button#back-btn {
     width: 44px !important;
     height: 44px !important;
     padding: 0 !important;
@@ -757,12 +799,14 @@ button#back-btn:hover {
   }
 
   /* Ensure icons are always visible for flex alignment */
-  #start-btn i, #back-btn i {
+  #start-btn i,
+  #back-btn i {
     display: inline-flex;
   }
 
 
-  button#start-btn, button#back-btn {
+  button#start-btn,
+  button#back-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -792,24 +836,30 @@ button#back-btn:hover {
   #timer-display {
     font-size: 25vw;
   }
+
   .slot-times {
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
   }
+
   .time-input-group {
     justify-content: flex-start;
     gap: 0.25rem;
   }
+
   .time-label {
     font-size: 0.7rem;
   }
+
   .time-input-pair {
     gap: 0.2rem;
   }
+
   .time-input-pair span {
     font-size: 0.9rem;
   }
+
   .time-input-pair input {
     width: 38px !important;
     font-size: 0.8rem;
@@ -902,6 +952,7 @@ body.dark-theme .toast h3 {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -913,6 +964,7 @@ body.dark-theme .toast h3 {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   to {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
