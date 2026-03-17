@@ -1,6 +1,6 @@
 # Toastmasters Timer
 
-A professional, full-screen countdown timer for [Toastmasters](https://www.toastmasters.org/) meetings — built as a single-page web app with no backend required.
+A professional, full-screen countdown timer for [Toastmasters](https://www.toastmasters.org/) meetings — built as a Progressive Web App (PWA) with no backend required. It can be installed on your device for quick access and offline use.
 
 **[▶ Live Demo](https://fangfufu.github.io/toastmaster-timer/)**
 
@@ -20,6 +20,8 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
   - **Flashing red** — bell time (30 seconds past maximum), with a pulsing red/dark flash to grab attention.
 - **Large countdown display** — timer text is sized at `15vw` so it's readable from across the room.
 - **Screen Wake Lock** — automatically requests a wake lock so the device screen stays on during timing.
+- **Progressive Web App (PWA)** — can be installed on mobile (iOS/Android) and desktop (Chrome/Edge/Safari) for a native-like experience.
+- **Offline support** — once visited or installed, the app works entirely offline without an internet connection.
 
 ### Time Tracking
 - **Time used indicator** — after each timed segment, a colour-coded progress bar appears on the setup screen showing what percentage of the bell time the speaker used.
@@ -57,7 +59,8 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
 |-----------|------------|
 | Markup | HTML5 |
 | Styling | Vanilla CSS (glassmorphism, CSS variables, keyframe animations) |
-| Logic | Vanilla JavaScript (ES6+) |
+| Logic | Vanilla JavaScript (ES6+), Service Workers |
+| PWA | Web App Manifest, Service Worker caching |
 | Icons | [Lucide](https://lucide.dev/) |
 | Fonts | [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts |
 | Session files | [js-yaml](https://github.com/nodeca/js-yaml) (loaded from CDN) |
