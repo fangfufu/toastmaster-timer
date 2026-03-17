@@ -16,3 +16,14 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Capacitor
+capacitor.config.json.local
+capacitor.config.js.local
+capacitor.config.ts.local
