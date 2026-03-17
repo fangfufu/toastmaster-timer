@@ -153,8 +153,8 @@ body.state-bell {
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   padding: 3rem;
-  width: 95%;
-  max-width: 1000px;
+  width: 90%;
+  max-width: 1200px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   transition: opacity 0.3s ease, transform 0.3s ease;
   display: flex;
@@ -309,8 +309,8 @@ p.subtitle {
 }
 
 .time-used-col {
-  flex: 0.2;
-  min-width: 80px;
+  flex: 0.1;
+  min-width: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -621,8 +621,8 @@ button#start-btn:disabled {
   border: 1px solid var(--summary-border);
   border-radius: 24px;
   padding: 3rem;
-  width: 100%;
-  max-width: 500px;
+  width: 90%;
+  max-width: 700px;
   box-shadow: 0 25px 50px -12px var(--summary-shadow);
 }
 
