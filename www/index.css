@@ -168,7 +168,9 @@ body.state-bell {
 body.dark-theme #setup-view {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
+
 @media (max-width: 850px) {
+
   body.dark-theme #setup-view,
   body.dark-theme #summary-view {
     box-shadow: none !important;
@@ -396,10 +398,16 @@ input:focus {
   border-color: var(--accent) !important;
 }
 
+.secondary-btn.danger-btn {
+  background: var(--tm-red);
+  color: white;
+  border: 1px solid var(--tm-red);
+}
+
 .secondary-btn.danger-btn:hover {
-  background: var(--delete-hover-bg);
-  border-color: var(--tm-red);
-  color: var(--tm-red);
+  background: #dc2626;
+  border-color: #dc2626;
+  color: white;
 }
 
 .secondary-btn.danger-btn:disabled {
@@ -408,6 +416,7 @@ input:focus {
   background: var(--secondary-btn-bg);
   color: var(--text-secondary);
   border-color: var(--glass-border);
+  border-style: dashed;
 }
 
 .setup-actions {
@@ -467,6 +476,55 @@ button#back-btn {
 .secondary-btn:hover {
   background: var(--secondary-btn-hover);
   border-color: var(--text-secondary);
+}
+
+#save-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+}
+
+#save-btn:hover {
+  background: #34d399;
+}
+
+#load-label.secondary-btn {
+  background: #0ea5e9;
+  color: white;
+  border: none;
+}
+
+#load-label.secondary-btn:hover {
+  background: #38bdf8;
+}
+
+#usage-btn {
+  background: #8b5cf6;
+  color: white;
+  border: none;
+}
+
+#usage-btn:hover {
+  background: #a78bfa;
+}
+
+#theme-btn.secondary-btn {
+  background: #f59e0b;
+  color: white;
+  border: none;
+}
+
+#theme-btn.secondary-btn:hover {
+  background: #fbbf24;
+}
+
+body.dark-theme #theme-btn.secondary-btn {
+  background: #3b82f6;
+  /* Blue for moon/night */
+}
+
+body.dark-theme #theme-btn.secondary-btn:hover {
+  background: #60a5fa;
 }
 
 #add-slot-btn {
@@ -676,7 +734,9 @@ button#back-btn:hover {
 
 /* Responsive */
 @media (max-width: 850px) {
-  body, #app {
+
+  body,
+  #app {
     height: 100vh !important;
     overflow: hidden !important;
   }
