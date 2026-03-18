@@ -4,6 +4,11 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
 
 **[▶ Live Demo](https://fangfufu.github.io/toastmaster-timer/)**
 
+<p align="center">
+  <img src="assets/screenshot-wide.png" width="600" alt="Desktop View">
+  <img src="assets/screenshot-narrow.png" width="200" alt="Mobile View">
+</p>
+
 ## Features
 
 ### Session Setup
@@ -34,6 +39,28 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
 - **Responsive layout** — works on desktop and mobile with dedicated breakpoints at 850 px and 600 px.
 - **Dark glassmorphism UI** — modern dark theme with translucent glass panels, subtle borders, and smooth transitions.
 - **No build step** — pure HTML, CSS, and vanilla JavaScript; just open `index.html` or deploy to any static host.
+
+## Installation (PWA)
+
+You can install this timer as a Progressive Web App (PWA) to use it offline and launch it directly from your home screen or desktop.
+
+### iOS (Safari)
+1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Safari.
+2. Tap the **Share** button at the bottom of the screen.
+3. Scroll down and tap **Add to Home Screen**.
+4. Confirm by tapping **Add** in the top-right corner.
+
+### Android (Chrome)
+1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Chrome.
+2. Tap the **three-dot menu** (⋮) in the top-right corner.
+3. Tap **Add to Home screen** or **Install app**.
+4. Follow the on-screen prompt to install.
+
+### Desktop (Chrome / Edge)
+1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Chrome or Edge.
+2. Look for the install icon (a screen with a down arrow) in the right side of the address bar.
+3. Click it and select **Install**.
+4. The app will now be available in your applications list and works entirely offline.
 
 ## Usage
 
