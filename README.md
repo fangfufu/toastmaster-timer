@@ -65,11 +65,11 @@ You can install this timer as a Progressive Web App (PWA) to use it offline and 
 ## Usage
 
 1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) or serve the files locally.
-2. Edit the agenda — fill in speaker names and adjust min/max times as needed.
-3. Select a slot with the radio button, then click **Start Speaker Slot**.
-4. The timer runs full-screen. Press the **■ Stop** button when the speaker finishes.
+2. Edit the agenda — fill in speaker names and adjust min/max times as needed. Use the **Add** and **Delete** buttons to manage roles.
+3. Click on a row to select a slot, then click **Start**.
+4. The timer runs full-screen. Press the **Stop** button (square icon) when the speaker finishes.
 5. Review the summary, then click **Back to Setup** to time the next speaker.
-6. Use **Save Session** / **Load Session** to persist your work between meetings.
+6. Use **Save** and **Load** to persist your work between meetings.
 
 ## Colour Thresholds
 
