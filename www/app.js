@@ -29,6 +29,7 @@ const resetBtn = document.getElementById('reset-btn');
 const backBtn = document.getElementById('back-btn');
 const slotsContainer = document.getElementById('slots-container');
 const addSlotBtn = document.getElementById('add-slot-btn');
+const deleteSlotBtn = document.getElementById('delete-slot-btn');
 const slotTemplate = document.getElementById('slot-template');
 
 // Input conversion helper
@@ -91,10 +92,10 @@ async function releaseWakeLock() {
 
 // Timer Logic
 function startTimer() {
-  const selectedRadio = document.querySelector('.slot-radio:checked');
-  if (!selectedRadio) return; // Should be handled by disabled state, but just in case
+  const selectedRow = document.querySelector('.slot-row.selected');
+  if (!selectedRow) return;
 
-  const row = selectedRadio.closest('.slot-row');
+  const row = selectedRow;
 
   // Get and parse inputs
   const minMM = parseInt(row.querySelector('.min-mm').value) || 0;
@@ -135,10 +136,9 @@ async function stopTimer() {
   // Show summary
   totalTimeDisplay.innerText = formatTime(secondsElapsed);
 
-  // Update Time Used bar for the selected row
-  const selectedRadio = document.querySelector('.slot-radio:checked');
-  if (selectedRadio) {
-    const row = selectedRadio.closest('.slot-row');
+  const selectedRow = document.querySelector('.slot-row.selected');
+  if (selectedRow) {
+    const row = selectedRow;
     const timeUsedCol = row.querySelector('.time-used-col');
     const progressFill = row.querySelector('.progress-fill');
     const timeLabel = row.querySelector('.time-used-label');
@@ -227,6 +227,7 @@ if (isCapacitor) {
 function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS = '00', select = false, timeUsed = null) {
   const node = slotTemplate.content.cloneNode(true);
   const row = node.querySelector('.slot-row');
+  const currentSelected = slotsContainer.querySelector('.slot-row.selected');
 
   node.querySelector('.slot-role').value = role;
   node.querySelector('.slot-name').value = name;
@@ -235,14 +236,21 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
   node.querySelector('.max-mm').value = maxM;
   node.querySelector('.max-ss').value = maxS;
 
-  const radio = node.querySelector('.slot-radio');
-  radio.addEventListener('change', () => {
+  row.addEventListener('click', (e) => {
+    // Don't select if clicking the delete button
+    if (e.target.closest('.delete-btn')) return;
+
+    document.querySelectorAll('.slot-row').forEach(r => r.classList.remove('selected'));
+    row.classList.add('selected');
     startBtn.disabled = false;
+    deleteSlotBtn.disabled = false;
   });
 
   if (select) {
-    radio.checked = true;
+    document.querySelectorAll('.slot-row').forEach(r => r.classList.remove('selected'));
+    row.classList.add('selected');
     startBtn.disabled = false;
+    deleteSlotBtn.disabled = false;
   }
 
   // Restore time used if provided
@@ -282,46 +290,59 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
     }
   }
 
-  node.querySelector('.delete-btn').addEventListener('click', () => {
-    const wasChecked = radio.checked;
-    row.remove();
-    if (wasChecked) {
-      startBtn.disabled = true;
-      // Auto-select first available radio if possible
-      const firstRadio = slotsContainer.querySelector('.slot-radio');
-      if (firstRadio) {
-        firstRadio.checked = true;
-        startBtn.disabled = false;
-      }
-    }
-  });
-
   // Insertion Logic: Insert after selected row, or append to end
-  const selectedRadio = slotsContainer.querySelector('.slot-radio:checked');
-  if (selectedRadio) {
-    const selectedRow = selectedRadio.closest('.slot-row');
-    selectedRow.after(row);
+  if (currentSelected) {
+    currentSelected.after(row);
   } else {
     slotsContainer.appendChild(row);
   }
 
+  // Selection Logic: Re-run selection for buttons if needed
+  if (!slotsContainer.querySelector('.slot-row.selected')) {
+    startBtn.disabled = true;
+    deleteSlotBtn.disabled = true;
+  }
+  
   lucide.createIcons(); // Re-initialize icons for newly added elements
 }
 
 addSlotBtn.addEventListener('click', () => {
-  const selectedRadio = slotsContainer.querySelector('.slot-radio:checked');
-  let sourceRow = selectedRadio ? selectedRadio.closest('.slot-row') : slotsContainer.querySelector('.slot-row:last-child');
+  const selectedRow = slotsContainer.querySelector('.slot-row.selected');
+  let sourceRow = selectedRow || slotsContainer.querySelector('.slot-row:last-child');
 
   if (sourceRow) {
     const role = sourceRow.querySelector('.slot-role').value;
+    const name = sourceRow.querySelector('.slot-name').value;
     const minM = sourceRow.querySelector('.min-mm').value;
     const minS = sourceRow.querySelector('.min-ss').value;
     const maxM = sourceRow.querySelector('.max-mm').value;
     const maxS = sourceRow.querySelector('.max-ss').value;
-    addSlot(role, '', minM, minS, maxM, maxS, true);
+    addSlot(role, name, minM, minS, maxM, maxS, true);
   } else {
     addSlot();
   }
+});
+
+deleteSlotBtn.addEventListener('click', () => {
+  const selectedRow = slotsContainer.querySelector('.slot-row.selected');
+  if (!selectedRow) return;
+
+  const role = selectedRow.querySelector('.slot-role').value || 'this slot';
+  showConfirm('Delete Slot', `Are you sure you want to delete "${role}"?`, () => {
+    selectedRow.remove();
+    
+    // Auto-select first available row if possible
+    const firstRow = slotsContainer.querySelector('.slot-row');
+    if (firstRow) {
+      document.querySelectorAll('.slot-row').forEach(r => r.classList.remove('selected'));
+      firstRow.classList.add('selected');
+      startBtn.disabled = false;
+      deleteSlotBtn.disabled = false;
+    } else {
+      startBtn.disabled = true;
+      deleteSlotBtn.disabled = true;
+    }
+  });
 });
 
 // Initialize first slots
@@ -345,10 +366,11 @@ addSlot('Timekeeper Report', '', '1', '00', '2', '00', false);
 addSlot('General Evaluator', '', '3', '00', '5', '00', false);
 addSlot('Call for volunteers', '', '1', '00', '3', '00', false);
 // Select first slot by default
-const firstRadio = slotsContainer.querySelector('.slot-radio');
-if (firstRadio) {
-  firstRadio.checked = true;
+const firstRow = slotsContainer.querySelector('.slot-row');
+if (firstRow) {
+  firstRow.classList.add('selected');
   startBtn.disabled = false;
+  deleteSlotBtn.disabled = false;
 }
 
 // Re-request wake lock if tab becomes visible again
@@ -400,12 +422,14 @@ loadInput.addEventListener('change', (e) => {
           addSlot(slot.role || '', slot.name || '', slot.minMin || '0', slot.minSec || '00', slot.maxMin || '0', slot.maxSec || '00', false, slot.timeUsed);
         });
 
-        const firstRadio = slotsContainer.querySelector('.slot-radio');
-        if (firstRadio) {
-          firstRadio.checked = true;
+        const firstRow = slotsContainer.querySelector('.slot-row');
+        if (firstRow) {
+          firstRow.classList.add('selected');
           startBtn.disabled = false;
+          deleteSlotBtn.disabled = false;
         } else {
           startBtn.disabled = true;
+          deleteSlotBtn.disabled = true;
         }
       } else {
         alert('Invalid session file format. Expected an array of slots.');
@@ -422,8 +446,8 @@ loadInput.addEventListener('change', (e) => {
 // Toast Notification
 function showToast(html, duration = 10000) {
   const container = document.getElementById('toast-container');
-  // Remove existing toasts
   container.innerHTML = '';
+  container.classList.add('active');
 
   const toast = document.createElement('div');
   toast.className = 'toast';
@@ -432,14 +456,53 @@ function showToast(html, duration = 10000) {
 
   const dismiss = () => {
     toast.classList.add('toast-out');
-    toast.addEventListener('animationend', () => toast.remove());
+    toast.addEventListener('animationend', () => {
+      toast.remove();
+      if (container.innerHTML === '') {
+        container.classList.remove('active');
+      }
+    });
   };
 
   toast.querySelector('.toast-close').addEventListener('click', dismiss);
-
+  
   if (duration > 0) {
     setTimeout(dismiss, duration);
   }
+  
+  return dismiss;
+}
+
+function showConfirm(title, message, onConfirm) {
+  const container = document.getElementById('toast-container');
+  container.innerHTML = '';
+  container.classList.add('active');
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <h3 style="margin-bottom: 0.5rem">${title}</h3>
+    <p>${message}</p>
+    <div class="toast-actions">
+      <button class="toast-btn secondary cancel-btn">Cancel</button>
+      <button class="toast-btn danger confirm-btn">Delete</button>
+    </div>
+  `;
+  container.appendChild(toast);
+
+  const dismiss = () => {
+    toast.classList.add('toast-out');
+    toast.addEventListener('animationend', () => {
+      toast.remove();
+      container.classList.remove('active');
+    });
+  };
+
+  toast.querySelector('.cancel-btn').addEventListener('click', dismiss);
+  toast.querySelector('.confirm-btn').addEventListener('click', () => {
+    onConfirm();
+    dismiss();
+  });
 }
 
 // Usage Button
@@ -448,7 +511,7 @@ usageBtn.addEventListener('click', () => {
   showToast(`
     <h3>How to Use</h3>
     <p><strong>1.</strong> Edit the agenda — fill in speaker names and adjust min/max times.</p>
-    <p><strong>2.</strong> Select a slot with the radio button, then click <strong>Start Speaker Slot</strong>.</p>
+    <p><strong>2.</strong> Click on a row to select a slot, then click <strong>■ Start</strong> (the play icon).</p>
     <p><strong>3.</strong> The timer runs full-screen with colour changes: <strong style="color:var(--tm-green)">Green</strong> (min time), <strong style="color:var(--tm-amber)">Amber</strong> (midpoint), <strong style="color:var(--tm-red)">Red</strong> (max time), <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
     <p><strong>4.</strong> Press <strong>■ Stop</strong> when the speaker finishes, then <strong>Back to Setup</strong> for the next speaker.</p>
     <p><strong>5.</strong> Use <strong>Save / Load Session</strong> to persist your work between meetings.</p>

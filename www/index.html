@@ -31,6 +31,9 @@
           <button id="add-slot-btn" class="secondary-btn">
             <i data-lucide="plus"></i> <span class="btn-text">Add</span>
           </button>
+          <button id="delete-slot-btn" class="secondary-btn danger-btn" disabled>
+            <i data-lucide="trash-2"></i> <span class="btn-text">Delete</span>
+          </button>
           <button id="start-btn" disabled>
             <i data-lucide="play"></i> <span class="btn-text">Start</span>
           </button>
@@ -54,11 +57,7 @@
     </div>
 
     <template id="slot-template">
-      <div class="slot-row">
-        <label class="radio-label" title="Select to start timer for this slot">
-          <input type="radio" name="selected-slot" class="slot-radio">
-          <span class="custom-radio"></span>
-        </label>
+      <div class="slot-row" title="Click to select this slot">
 
         <div class="time-used-col">
           <span class="time-label time-used-label">Time used</span>
@@ -91,9 +90,6 @@
           </div>
         </div>
 
-        <button class="icon-btn delete-btn" title="Remove Slot">
-          <i data-lucide="trash-2"></i>
-        </button>
       </div>
     </template>
 
