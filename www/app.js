@@ -509,13 +509,20 @@ function showConfirm(title, message, onConfirm) {
 const usageBtn = document.getElementById('usage-btn');
 usageBtn.addEventListener('click', () => {
   showToast(`
-    <h3>How to Use</h3>
-    <p><strong>1.</strong> Edit the agenda — fill in speaker names and adjust min/max times.</p>
-    <p><strong>2.</strong> Click on a row to select a slot, then click <strong>■ Start</strong> (the play icon).</p>
-    <p><strong>3.</strong> The timer runs full-screen with colour changes: <strong style="color:var(--tm-green)">Green</strong> (min time), <strong style="color:var(--tm-amber)">Amber</strong> (midpoint), <strong style="color:var(--tm-red)">Red</strong> (max time), <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
-    <p><strong>4.</strong> Press <strong>■ Stop</strong> when the speaker finishes, then <strong>Back to Setup</strong> for the next speaker.</p>
-    <p><strong>5.</strong> Use <strong>Save / Load Session</strong> to persist your work between meetings.</p>
+    <h3 style="margin-bottom: 0.75rem;">How to Use</h3>
+    <div style="text-align: left; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+      <p><strong>1.</strong> Edit the agenda — fill in speaker names and adjust min/max times.</p>
+      <p><strong>2.</strong> Click on a row to select a slot, then click <strong><i data-lucide="play" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Start</strong>.</p>
+      <p><strong>3.</strong> The timer runs full-screen with colour changes:<br>
+         <strong style="color:var(--tm-green)">Green</strong> (min time), 
+         <strong style="color:var(--tm-amber)">Amber</strong> (midpoint), 
+         <strong style="color:var(--tm-red)">Red</strong> (max time), 
+         <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
+      <p><strong>4.</strong> Press <strong><i data-lucide="square" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Stop</strong> when the speaker finishes, then <strong><i data-lucide="arrow-left" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Back to Setup</strong>.</p>
+      <p><strong>5.</strong> Use <strong><i data-lucide="download" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Save</strong> and <strong><i data-lucide="upload" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Load</strong> to persist your work between meetings.</p>
+    </div>
   `, 0);
+  lucide.createIcons();
 });
 
 // Theme Toggle
