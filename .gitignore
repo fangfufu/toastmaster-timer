@@ -49,3 +49,6 @@ node_modules/
 capacitor.config.json.local
 capacitor.config.js.local
 capacitor.config.ts.local
+
+# Android release files
+android/app/release/

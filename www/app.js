@@ -302,7 +302,7 @@ function addSlot(role = '', name = '', minM = '5', minS = '00', maxM = '7', maxS
     startBtn.disabled = true;
     deleteSlotBtn.disabled = true;
   }
-  
+
   lucide.createIcons(); // Re-initialize icons for newly added elements
 }
 
@@ -330,7 +330,7 @@ deleteSlotBtn.addEventListener('click', () => {
   const role = selectedRow.querySelector('.slot-role').value || 'this slot';
   showConfirm('Delete Slot', `Are you sure you want to delete "${role}"?`, () => {
     selectedRow.remove();
-    
+
     // Auto-select first available row if possible
     const firstRow = slotsContainer.querySelector('.slot-row');
     if (firstRow) {
@@ -465,11 +465,11 @@ function showToast(html, duration = 10000) {
   };
 
   toast.querySelector('.toast-close').addEventListener('click', dismiss);
-  
+
   if (duration > 0) {
     setTimeout(dismiss, duration);
   }
-  
+
   return dismiss;
 }
 
@@ -519,7 +519,8 @@ usageBtn.addEventListener('click', () => {
          <strong style="color:var(--tm-red)">Red</strong> (max time), 
          <strong style="color:var(--tm-red)">Flashing</strong> (bell — 30 s past max).</p>
       <p><strong>4.</strong> Press <strong><i data-lucide="square" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Stop</strong> when the speaker finishes, then <strong><i data-lucide="arrow-left" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Back to Setup</strong>.</p>
-      <p><strong>5.</strong> Use <strong><i data-lucide="download" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Save</strong> and <strong><i data-lucide="upload" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Load</strong> to persist your work between meetings.</p>
+      <p><strong>5.</strong> Made a mistake? Stop the segment and press <strong><i data-lucide="play" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Start</strong> again to overwrite the record.</p>
+      <p><strong>6.</strong> Use <strong><i data-lucide="download" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Save</strong> and <strong><i data-lucide="upload" style="width: 1.2em; height: 1.2em; vertical-align: -0.2em; display: inline-block;"></i> Load</strong> to persist your work between meetings.</p>
     </div>
   `, 0);
   lucide.createIcons();
