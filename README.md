@@ -44,17 +44,31 @@ A professional, full-screen countdown timer for [Toastmasters](https://www.toast
 
 You can install this timer as a Progressive Web App (PWA) to use it offline and launch it directly from your home screen or desktop.
 
+## Installation
+
+### Android
+There are three ways of installing this app on Android.
+
+#### Google Play store
+This app is currently undergoing testing on Google Play store. If you want to join the testing, do the followings:
+1. **Important** - Join this group first: https://groups.google.com/g/fufu-test-action-group
+2. Join using Google Play on Android: https://play.google.com/store/apps/details?id=com.fufufang86.toastmastertimer
+3. Join on the Web: https://play.google.com/apps/testing/com.fufufang86.toastmastertimer
+
+#### Direct APK install
+You can download the latest APK here: https://github.com/fangfufu/toastmaster-timer/releases/
+
+#### Chrome
+1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Chrome.
+2. Tap the **three-dot menu** (⋮) in the top-right corner.
+3. Tap **Add to Home screen** or **Install app**.
+4. Follow the on-screen prompt to install.
+
 ### iOS (Safari)
 1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Safari.
 2. Tap the **Share** button at the bottom of the screen.
 3. Scroll down and tap **Add to Home Screen**.
 4. Confirm by tapping **Add** in the top-right corner.
-
-### Android (Chrome)
-1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Chrome.
-2. Tap the **three-dot menu** (⋮) in the top-right corner.
-3. Tap **Add to Home screen** or **Install app**.
-4. Follow the on-screen prompt to install.
 
 ### Desktop (Chrome / Edge)
 1. Open the [live demo](https://fangfufu.github.io/toastmaster-timer/) in Chrome or Edge.
